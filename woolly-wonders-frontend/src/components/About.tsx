@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography, Paper, useTheme } from "@mui/material"; // Added useTheme
+import { Box, Container, Typography, Paper } from "@mui/material"; // Added useTheme
 import { Sparkles, Mountain } from "lucide-react"; // Importing Lucide icons
 
 const About: React.FC = () => {

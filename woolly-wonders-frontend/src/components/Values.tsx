@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, Users, Heart, CheckCircle } from 'lucide-react'; // Lucide Icons
+import { Leaf, Users, Heart } from 'lucide-react'; // Lucide Icons
 
 import { Box, Typography, Paper, Avatar } from '@mui/material';
 
