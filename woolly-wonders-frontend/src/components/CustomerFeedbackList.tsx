@@ -86,17 +86,16 @@ const CustomerFeedbackList = () => {
       gap: '16px',
       maxWidth: '600px',
       margin: '0 auto',
-      minHeight: '400px'
+      // Removed fixed minHeight so it shrinks with content
     },
     card: {
       background: 'white',
       borderRadius: '12px',
-      padding: '20px',
+      padding: '24px', // Slightly increased padding for breathing room
       boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       display: 'flex',
       flexDirection: 'column' as const,
-      justifyContent: 'space-between',
-      minHeight: '180px',
+      // Removed minHeight so it fits short text snugly
       transition: 'all 0.3s ease',
       position: 'relative' as const,
       overflow: 'hidden'
@@ -110,26 +109,28 @@ const CustomerFeedbackList = () => {
       background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)'
     },
     cardContent: {
-      flex: 1
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column' as const,
+      gap: '8px' // Adds consistent spacing between elements
     },
     headline: {
       fontSize: '16px',
       fontWeight: 'bold',
       color: '#1a202c',
-      marginBottom: '10px',
       lineHeight: '1.3'
     },
     ratingContainer: {
       display: 'flex',
       alignItems: 'center',
-      gap: '3px',
-      marginBottom: '10px'
+      gap: '3px'
     },
     suggestion: {
-      fontSize: '13px',
+      fontSize: '14px',
       color: '#4a5568',
-      lineHeight: '1.5',
-      fontStyle: 'italic'
+      lineHeight: '1.6',
+      fontStyle: 'italic',
+      marginTop: '8px'
     },
     footer: {
       marginTop: '16px',
