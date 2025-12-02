@@ -1,10 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { Box, Button, Container, Paper, Typography, CardMedia } from "@mui/material";
-
-import Values from "../components/Values";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Button, Container, Paper, Avatar } from "@mui/material";
+import { ArrowRight, Phone, MapPin, Mail } from "lucide-react";
+import CustomerFeedbackList from "../components/CustomerFeedbackList";
 
 // Carousel images
 const carouselImages = [
@@ -16,212 +13,329 @@ const carouselImages = [
 ];
 
 const HomePage: React.FC = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-  };
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Design Constants matching ProductsPage
+  const primaryGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+  const christmasGradient = 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)';
+  const primaryColor = '#667eea';
+  const secondaryColor = '#764ba2';
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    
     <Box>
+      {/* 1. Hero Section */}
       <Box
-  sx={{
-    display: "flex",
-    flexDirection: { xs: "column", md: "row" },
-    alignItems: "center",
-    justifyContent: "center",
-    bgcolor: "white",
-    py: { xs: 1, sm: 3, md: 6 }, // reduced padding on mobile
-    gap: { xs: 8, md: 10 }, // spacing between logo and text
-  }}
->
-  {/* Logo */}
-  <Box
-    component="img"
-    src="/woolly-wonders.png"
-    alt="Woolly Wonders Logo"
-    sx={{
-      width: { xs: 200, sm: 300, md: 350, lg: 400 }, // slightly bigger on mobile
-      height: "auto",
-    }}
-  />
-
-  {/* Welcome Section */}
-  <Box
-    sx={{
-      textAlign: { xs: "center", md: "left" },
-      maxWidth: { xs: "100%", md: "500px" },
-    }}
-  >
-    <Typography variant="h3" fontWeight="bold" color="text.primary" gutterBottom>
-      Welcome to Woolly Wonders
-    </Typography>
-
-    <Typography variant="h6" color="text.secondary" mb={4} lineHeight={1.7}>
-      Since 2013, we've been bringing authentic Himalayan craftsmanship to Delaware 
-      and beyond. Every piece in our collection is handmade with care by skilled 
-      artisans in Nepal.
-    </Typography>
-
-    <Box display="flex" flexWrap="wrap" gap={2} justifyContent={{ xs: "center", md: "flex-start" }}>
-      <Button
-        variant="contained"
-        size="large"
-        component={Link}
-        to="/products"
-        endIcon={<ArrowRightAltIcon />}
-        sx={{ px: 4, py: 1.5, borderRadius: 2 }}
+        sx={{
+          background: primaryGradient,
+          color: 'white',
+          py: { xs: 8, md: 12 },
+          textAlign: 'center',
+          boxShadow: 3,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
       >
-        Shop Our Collection
-      </Button>
+        <Container maxWidth="md">
+            {/* Logo Avatar */}
+          <Avatar
+            src="/woolly-wonders.png"
+            alt="Woolly Wonders Logo"
+            sx={{
+              width: 200,
+              height: 200,
+              mb: 4,
+              border: '4px solid white',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+              mx: 'auto'
+            }}
+          />
+          
+          <Typography variant="h3" component="h1" fontWeight="bold" gutterBottom>
+            Welcome to Woolly Wonders
+          </Typography>
+          
+          <Typography variant="h6" sx={{ opacity: 0.95, mb: 4, maxWidth: '600px', mx: 'auto' }}>
+            Since 2013, we've been bringing authentic Himalayan craftsmanship to Delaware 
+            and beyond. Every piece is handmade with care by skilled artisans in Nepal.
+          </Typography>
 
-      <Button
-        variant="outlined"
-        size="large"
-        component={Link}
-        to="/about"
-        sx={{ px: 4, py: 1.5, borderRadius: 2, borderWidth: 2 }}
-      >
-        Learn Our Story
-      </Button>
-    </Box>
-  </Box>
-</Box>
-
-
-      {/* Hero Carousel */}
-      <Box sx={{ bgcolor: "#f0f0f0", py: { xs: 2, sm: 4, md: 6 } }}>
-        <Container maxWidth="lg" sx={{ display: "flex", justifyContent: "center" }}>
-          <Box sx={{ width: "80%" }}>
-            <Slider {...settings}>
-              {carouselImages.map((img, index) => (
-                <Box key={index}>
-                  <CardMedia
-                    component="img"
-                    image={img}
-                    alt={`Slide ${index + 1}`}
-                    sx={{
-                      width: "100%",
-                      height: { xs: 250, sm: 350, md: 500 },
-                      objectFit: "cover",
-                      borderRadius: 2,
-                    }}
-                  />
-                </Box>
-              ))}
-            </Slider>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, justifyContent: 'center' }}>
+            {/* LINKED TO PRODUCTS PAGE */}
+            <Button
+              variant="contained"
+              size="large"
+              href="/products"
+              endIcon={<ArrowRight size={20} />}
+              sx={{
+                bgcolor: 'white',
+                color: primaryColor,
+                fontWeight: 'bold',
+                px: 4,
+                py: 1.5,
+                borderRadius: '12px',
+                '&:hover': {
+                  bgcolor: '#f8fafc',
+                  transform: 'translateY(-2px)'
+                },
+                transition: 'all 0.2s'
+              }}
+            >
+              Shop Collection
+            </Button>
+            
+            {/* LINKED TO ABOUT PAGE */}
+            <Button
+              variant="outlined"
+              size="large"
+              href="/about"
+              sx={{
+                borderColor: 'white',
+                color: 'white',
+                fontWeight: 'bold',
+                px: 4,
+                py: 1.5,
+                borderRadius: '12px',
+                '&:hover': {
+                  borderColor: 'white',
+                  bgcolor: 'rgba(255,255,255,0.1)'
+                }
+              }}
+            >
+              Learn Our Story
+            </Button>
           </Box>
         </Container>
       </Box>
 
-      <Box py={8} sx={{ bgcolor: "#f8fafc" }}>
-        <Container maxWidth="sm">
+      {/* 2. Carousel Section */}
+      <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: '#f8fafc' }}>
+        <Container maxWidth="md">
           <Paper
-            elevation={6}
+            elevation={10}
             sx={{
-              p: 4,
-              borderRadius: 3,
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
+              position: 'relative',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              height: { xs: '300px', md: '400px' }
             }}
           >
-            <Typography variant="h5" fontWeight="bold">
-              Contact Us
-            </Typography>
+            <Box
+              component="img"
+              src={carouselImages[currentSlide]}
+              alt="Featured Woolly Wonder"
+              sx={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                animation: 'fadeIn 0.5s ease-in',
+                '@keyframes fadeIn': {
+                  '0%': { opacity: 0 },
+                  '100%': { opacity: 1 },
+                },
+              }}
+            />
+            {/* Dots */}
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 16,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                gap: 1
+              }}
+            >
+              {carouselImages.map((_, idx) => (
+                <Box
+                  key={idx}
+                  onClick={() => setCurrentSlide(idx)}
+                  sx={{
+                    width: idx === currentSlide ? 24 : 8,
+                    height: 8,
+                    borderRadius: idx === currentSlide ? '4px' : '50%',
+                    bgcolor: idx === currentSlide ? 'white' : 'rgba(255,255,255,0.5)',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s'
+                  }}
+                />
+              ))}
+            </Box>
+          </Paper>
+        </Container>
+      </Box>
 
-            <Typography variant="body1" color="text.secondary">
-              Text us at: <Box component="span" fontWeight="bold">302-563-0058</Box>
-            </Typography>
+      {/* 3. Values Section (Using CSS Grid for stability) */}
+      <Box sx={{ py: { xs: 8, md: 10 }, background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
+        <Container maxWidth="lg">
+          <Typography 
+            variant="h4" 
+            component="h2" 
+            align="center" 
+            fontWeight="bold" 
+            mb={6}
+            sx={{ color: '#1a202c' }}
+          >
+            Why Choose Woolly Wonders
+          </Typography>
+          
+          <Box sx={{ 
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',             
+              sm: '1fr 1fr',         
+              md: 'repeat(4, 1fr)'   
+            },
+            gap: 4
+          }}>
+            {[
+              { icon: '🏔️', title: 'Authentic Craft', text: 'Handmade by skilled artisans in Nepal using traditional techniques.' },
+              { icon: '✨', title: 'Premium Quality', text: 'Using only the finest materials to ensure lasting beauty and warmth.' },
+              { icon: '🤝', title: 'Fair Trade', text: 'Supporting artisan communities with fair wages and sustainable practices.' },
+              { icon: '💝', title: 'Perfect Gifts', text: 'Unique, thoughtful gifts that bring warmth and joy to your loved ones.' }
+            ].map((item, index) => (
+              <Paper
+                key={index}
+                elevation={2}
+                sx={{
+                  p: 4,
+                  height: '100%',
+                  textAlign: 'center',
+                  borderRadius: '16px',
+                  transition: 'transform 0.2s',
+                  '&:hover': { transform: 'translateY(-5px)' }
+                }}
+              >
+                <Typography variant="h2" sx={{ mb: 2 }}>{item.icon}</Typography>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>{item.title}</Typography>
+                <Typography variant="body2" color="text.secondary">{item.text}</Typography>
+              </Paper>
+            ))}
+          </Box>
+        </Container>
+      </Box>
 
-            <Typography variant="body1" color="text.secondary">
-              Visit us at: <Box component="span" fontWeight="bold">Baltimore Christmas Village, West Shore Park</Box>
+      {/* 4. Christmas Section */}
+      <Box sx={{ background: christmasGradient, py: { xs: 8, md: 10 }, color: 'white' }}>
+        <Container maxWidth="md">
+          <Paper
+            elevation={10}
+            sx={{
+              p: { xs: 4, md: 6 },
+              textAlign: 'center',
+              borderRadius: '20px',
+              bgcolor: 'white',
+              color: '#1a202c'
+            }}
+          >
+            <Box 
+              component="img"
+              src="/baltimore-christmas.png" 
+              alt="Baltimore Christmas Village"
+              sx={{
+                width: '100%',
+                maxWidth: '300px',
+                borderRadius: '16px',
+                mb: 4,
+                boxShadow: 3
+              }}
+            />
+            <Typography variant="h4" fontWeight="bold" gutterBottom>
+              Find Us at Christmas Village
             </Typography>
-
+            <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary', maxWidth: '600px', mx: 'auto' }}>
+              We've been proud participants in Christmas Village since our beginning. 
+              Come visit us to see and feel the quality of our products in person!
+            </Typography>
             <Button
               variant="contained"
               size="large"
-              component={Link}
-              to="/contact"
-              sx={{ mt: 2, px: 4, py: 1.5, borderRadius: 2 }}
+              endIcon={<ArrowRight size={20} />}
+              sx={{
+                bgcolor: '#dc2626',
+                borderRadius: '30px',
+                padding: '10px 30px',
+                fontWeight: 'bold',
+                '&:hover': { bgcolor: '#991b1b' }
+              }}
+            >
+              Get Directions
+            </Button>
+          </Paper>
+        </Container>
+      </Box>
+
+      {/* 5. Contact Section */}
+      <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: 'white' }}>
+        <Container maxWidth="sm">
+          <Paper
+            elevation={10}
+            sx={{
+              p: { xs: 4, md: 6 },
+              borderRadius: '20px',
+              background: 'linear-gradient(145deg, #ffffff, #f0f4f8)',
+              border: `2px solid ${primaryColor}`,
+            }}
+          >
+            <Typography variant="h4" align="center" fontWeight="bold" gutterBottom sx={{ color: secondaryColor }}>
+              Get In Touch
+            </Typography>
+            
+            {/* Contact Items */}
+            <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 2, bgcolor: '#f8fafc', borderRadius: '12px' }}>
+                <Phone size={24} style={{ color: primaryColor }} />
+                <Box>
+                  <Typography variant="subtitle2" fontWeight="bold">Text us</Typography>
+                  <Typography variant="body2" color="text.secondary">302-563-0058</Typography>
+                </Box>
+              </Box>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 2, bgcolor: '#f8fafc', borderRadius: '12px' }}>
+                <MapPin size={24} style={{ color: primaryColor }} />
+                <Box>
+                  <Typography variant="subtitle2" fontWeight="bold">Visit us</Typography>
+                  <Typography variant="body2" color="text.secondary">Baltimore Christmas Village, West Shore Park</Typography>
+                </Box>
+              </Box>
+            </Box>
+
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              startIcon={<Mail size={20} />}
+              href="/contact"
+              sx={{
+                mt: 4,
+                background: primaryColor,
+                borderRadius: '30px',
+                fontWeight: 'bold',
+                padding: '12px',
+                '&:hover': {
+                  background: secondaryColor,
+                  transform: 'translateY(-2px)',
+                },
+                transition: 'all 0.3s ease',
+              }}
             >
               Send a Message
             </Button>
           </Paper>
         </Container>
       </Box>
-
-      {/* Values Section */}
-      <Values />
-
-     {/* Christmas Market Section */}
-<Box py={12} sx={{ background: "linear-gradient(90deg, #2563EB, #4F46E5)" }}>
-  <Container maxWidth="lg"> {/* Use larger container */}
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", md: "row" },
-        alignItems: "center",
-        justifyContent: "center",
-        gap: { xs: 6, md: 4 }, // balanced spacing
-      }}
-    >
-      {/* Image */}
-      <Box
-        component="img"
-        src="/baltimore-christmas.png"
-        alt="Baltimore Christmas Village"
-        sx={{
-          flex: { md: 1 },
-          width: { xs: "100%", md: "50%" }, // take half space on desktop
-          height: "auto",
-          borderRadius: 3,
-          objectFit: "contain",
-        }}
-      />
-
-      {/* Text Card */}
-      <Paper
-        elevation={6}
-        sx={{
-          flex: { md: 1 },
-          p: { xs: 4, md: 6 },
-          borderRadius: 3,
-          textAlign: "center",
-          width: { xs: "100%", md: "50%" }, // ensure proper width
-        }}
-      >
-        <Typography variant="h4" fontWeight="bold" color="text.primary" gutterBottom>
-          Find Us at Christmas Village
-        </Typography>
-
-        <Typography variant="h6" color="text.secondary" mb={4}>
-          We've been proud participants in Christmas Village since our beginning. 
-          Come visit us to see and feel the quality of our products in person!
-        </Typography>
-
-        <Button
-          variant="contained"
-          size="large"
-          component={Link}
-          to="/contact"
-          endIcon={<ArrowRightAltIcon />}
-          sx={{ px: 4, py: 1.5, borderRadius: 2 }}
-        >
-          Get In Touch
-        </Button>
-      </Paper>
-    </Box>
-  </Container>
-</Box>
-
+      
+      {/* 6. Customer Feedback */}
+      <Container maxWidth="lg" sx={{ mb: 10 }}>
+         <CustomerFeedbackList/>
+      </Container>
 
     </Box>
   );
